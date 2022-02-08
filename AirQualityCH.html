@@ -1,0 +1,109 @@
+<!--
+    @Author Guillaume Digier
+    @Title Mini-Project : Study of air quality in Switzerland
+    @Date 08/02/2022
+-->
+
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Fichiers pour l'affichage de la carte -->
+
+    <link href="https://api.mapbox.com/mapbox-gl-js/v1.10.1/mapbox-gl.css" rel="stylesheet" />
+    <script src="https://api.mapbox.com/mapbox-gl-js/v1.10.1/mapbox-gl.js"></script>
+
+    <!-- Fichiers pour le projet -->
+
+    <link rel="stylesheet" type="text/css" href="res/css/stylesheet.css">
+
+    <script type="text/csv" src="res/db/O3.csv"></script>
+
+    <title>Air quality in Switzerland</title>
+
+</head>
+
+<body>
+
+    <!-- Titre -->
+
+    <h1><u>Mini-Project : Study of air quality in Switzerland</u></h1>
+    <h3 class="infos">Author : Guillaume Digier (DLMA)</h3>
+    <h3 class="infos">Course : Numerical Algorithm (HE-ARC)</h3>
+    <h3 class="infos" style="margin-bottom: 20px;">Date : 08/02/2022</h3>
+
+    <hr>
+    <!-- Code couleur -->
+
+    <h2>Code couleur :</h2>
+
+    <div>
+        Le code couleur de cette représentation de la pollution dans l'air est relativement simple à comprendre :
+
+        <ul>
+            <li>
+                Plus la couleur est verte, plus cela indique une présence faible de la particule actuellement en cours
+                d'observation <b>[1]</b> ;
+            </li>
+            <li>
+                Plus la couleur est rouge, plus cela indique, au contraire, une présence forte de la particule
+                actuellement en cours d'observation <b>[2]</b> ;
+            </li>
+            <li>
+                Si la couleur est grise, cela signifie que les données de cette particule, pour ce mois et pour cette
+                station sont inexistantes <b>[3]</b>.
+            </li>
+        </ul>
+    </div>
+
+    <div align="center">
+        <img src="res/img/code-couleur-degrade.png" height="50%">
+        <img src="res/img/code-couleur-nan.png">
+    </div>
+
+    <!-- Pollution indication -->
+
+    <h2>Air pollution for each station :</h2>
+
+    <div align="center">
+        <div id="map"></div>
+    </div>
+
+    <!-- Pick up list -->
+
+    <h2>Choose a particle to observe :</h2>
+
+    <div>
+        <select id="select_particule" oninput="updateParticule();">
+            <option value="" selected disabled hidden>Choose the particle here ...</option>
+            <option value="O3">O3 [&micro;g/m3]</option>
+            <option value="NO2">NO2 [&micro;g/m3]</option>
+            <option value="SO2">SO2 [&micro;g/m3]</option>
+            <option value="CO">CO [mg/m3]</option>
+            <option value="PM10">PM10 [&micro;g/m3]</option>
+        </select>
+    </div>
+
+    <!-- Slider -->
+
+    <div class="slidecontainer">
+        <h2>Choose the month to observe :</h2>
+        <input type="range" min="0" max="244" value="244" class="slider" id="range_month" oninput="updateMonth();">
+        <div>
+            <h4 id="chosen_month">Choosen month : </h4>
+            <div id="info"></div>
+        </div>
+    </div>
+
+    <script src="Global.js"></script>
+    <script src="Station.js"></script>
+    <script src="Stations.js"></script>
+    <script src="Utilities.js"></script>
+    <script src="Main.js"></script>
+
+</body>
+
+</html>

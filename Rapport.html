@@ -1,0 +1,239 @@
+<!-- Rapport -->
+
+<h1><u>Rapport</u></h1>
+
+<h2>1. Introduction</h2>
+
+<h3>1.1. Contexte</h3>
+
+Pour ce mini-projet du cours d'Algorithme Numérique, il est demandé aux étudiants de réaliser un programme de
+mathématique appliquée.<br>Ce dernier doit tenir sur une page HTML et être développé au moyen du langage Javascript
+exclusivement.<br>Ce programme doit également avoir un lien direct avec au moins un des sept chapitres du cours.
+<br><br>
+Bien que le choix de l'application à proprement parler revienne aux étudiants, le thème générale du projet est
+imposé par les enseignants.<br>Le projet doit ainsi toucher directement ou indirectement au domaine de la &#171;
+Santé &#187;.
+
+<h3>1.2. Problématique</h3>
+
+La pollution dans son ensemble est un facteur bien trop souvent ignoré de la cause de décès chaque année.<br>
+Cependant, une étude <b>[1]</b> a montré que la pollution de l'air est, à elle seule, responsable de plus de décès
+que le tabac.<br>Ces chiffres, à la fois stupéfiant et terrifiant, donnent grandement à réfléchir. Ces derniers
+donnent une idée de la pollution de l'air actuelle dans le monde.<br>Mais qu'en est-il de la Suisse ?
+<br><br>
+Il se trouve que la Confédération Suisse a mis en place le Réseau national d'observation des polluants
+atmosphériques (NABEL).<br>Ce Réseau est un partenariat entre l'Office fédéral de l'environnement (OFEV) et
+l'European Monitoring and Evaluation Program (EMEP).<br>Le programme des mesures effectués par ce laboratoire est
+établi sur 10 ans, de l'année 2020 à l'année 2030 <b>[2]</b>.<br>À l'aide des 16 stations de mesures <b>[3]</b>,
+la présence de plusieurs types de particules <b>[4]</b> peuvent être relevées chaque jour sur l'ensemble du
+territoire Suisse.
+<br><br>
+Ces données journalières sont ensuite mises à la disposition du public par la Confédération Suisse <b>[5]</b> et
+peuvent être obtenues sous forme de fichier CSV.<br> L'idée du projet est donc, en toute logique, de s'approprier
+ces données et de les afficher de manière intéressante dans le temps et géographiquement.
+
+
+<h2>2. Solution proposée</h2>
+
+<h3>2.1. Idée en lien avec le cours d'Algorithme Numérique</h3>
+
+L'idée est de récupérer les données de la Confédération depuis la date la plus ultérieure possible (soit le 1er
+Janvier 2000),
+pour chacune des 16 stations disposées en Suisse et pour 5 des particules les plus notables :
+
+<ul>
+    <li>
+        L'Ozone (O3) [en mg/m<sup>3</sup>]
+    </li>
+    <li>
+        Le Dioxyde d'azote (NO<sub>2</sub>) [en mg/m<sup>3</sup>]
+    </li>
+    <li>
+        Le Dioxyde de soufre (SO<sub>2</sub>) [en &micro;g/m<sup>3</sup>]
+    </li>
+    <li>
+        Le Monoxyde de carbone (CO) [en mg/m<sup>3</sup>]
+    </li>
+    <li>
+        Les particules en suspension de moins de 10&micro;m (PM<sub>10</sub>) [en mg/m<sup>3</sup>]
+    </li>
+</ul>
+
+<h4>2.1.1. Données mensuelles</h4>
+
+Une fois ces données obtenues, il faut les traiter afin de pouvoir les utiliser comme il est souhaité. Dans le cas
+de ce projet, ce sont des données mensuelles qui doivent être manipulées (au final).<br>
+Cependant, comme les données brutes sont journalières, il faut impérativement déployer de l'Algorithme
+Numérique.<br> Il faut en effet afin effectuer une moyenne pour chaque mois entre Janvier 2000 et Mai 2020 (inclus),
+pour chaque particule et ce, pour chacune des stations.
+
+<h4>2.1.2. Minimum et maximum</h4>
+
+Le programme doit pouvoir choisir une couleur pour une "valeur mensuelle moyenne par particule et par station"
+donnée (<i>2.1.3.</i>).<br>Cela signifie qu'il sera nécessaire de connaître les valeurs minimales et maximales
+de chaque type de particule entre TOUTES les stations.<br>Cette recherche est fondamentalement de l'Algorithme
+Numérique.
+
+<h4>2.1.3. Index de couleur</h4>
+
+Lorsque finalement les moyennes mensuelles (<i>2.1.1.</i>) ainsi que les minimums et maximums (<i>2.1.2.</i>) sont
+connues, il est possible<br>de trouver la fonction qui choisit une couleur entre vert et rouge, suivant une forte
+présence ou non de la particule.
+<br><br>
+Il est donc IMPORTANT de préciser que dans ce programme, l'index de couleur n'indique PAS la dangerosité de la
+présence de la<br>particule, MAIS sa présence (pour un mois et une station en particulier) comparée à la présence
+la moins élevée ET la plus élevée enregistrée pour la particule.
+<br><br>
+<b><u>Ce programme permet donc de se faire une idée des régions de Suisse où la présence de particule est la plus
+        forte ou la plus faible comparées AUX VALEURS minimums et maximums de la particule.</u></b>
+
+<h3>2.2. Modèle développé</h3>
+
+Le principe est de posséder une carte sur laquelle sont montrées chacune des 16 stations de mesure en Suisse. Ces
+dernières sont représentées par un carré d'une certaine couleur (<i>2.1.3.</i>).<br> L'utilisateur a la possibilité
+de choisir à la fois la particule qu'il veut observer en Suisse (liste à choix) et le mois d'observation
+(slider).<br>
+Alors que les inputs sont modifiés, la carte se met à jour pour automatiquement pour afficher les informations
+correspondants aux inputs.
+
+<div align="center" style="margin-top: 24px;"><img src="res/img/figure-explicative.png" width="30%"></div>
+<div align="center" style="font-style: italic;">Schéma par M. Stépane Gobron lors d'une discussion</div>
+
+<h2>3. Résultats</h2>
+
+<h3>3.1. Classes et fonctions importantes</h3>
+
+Le fonctionnement du programme tourne autour de deux classes principales qui sont <b>Station</b> et <b>Stations</b>.
+<br><br>
+La classe <b>Station</b> représente une seule station de mesure en Suisse. Lorsqu'elle est instanciée, elle reçoit
+le
+chemin vers son fichier CSV associée.<br>Directement à la construction de l'instance, les données sont récupérées
+(méthode <b>retrieveDatas</b>) puis la partie Algorithme Numérique commence :
+
+<ul>
+    <li>
+        La méthode <b>searchMinimums</b> permettant de chercher la valeur minimum de chaque particule de la station
+        et de conserver le tout dans un attribut de classe de type Array <b><i>tabMins</i></b> ;
+    </li>
+    <li>
+        La méthode <b>searchMaximums</b> permettant de chercher la valeur maximum de chaque particule de la station
+        et de conserver le tout dans un attribut de classe de type Array <b><i>tabMaxs</i></b> ;
+    </li>
+    <li>
+        La méthode <b>averagePerMonth</b> permettant de calculer la moyenne mensuelle pour chaque particule de la
+        station et de conserver le tout un attribut de classe de type Array <b><i>tabMonthly</i></b>.
+    </li>
+</ul>
+
+La classe <b>Stations</b>, lors de la construction, s'occupe d'instancier chacune des 16 stations existantes (classe
+Station), puis dans les conserver dans un<br>attribut de classe de type Array <b><i>tabStation</i></b>. À la
+construction toujours, la partie Algorithme Numérique reprend :
+
+<ul>
+    <li>
+        La méthode <b>searchMinimums</b> permettant de chercher la valeur minimum de chaque particule parmis les
+        valeurs minimums de chaque stations (le tout conservé dans <b><i>tabMins</i></b>).
+    </li>
+    <li>
+        La méthode <b>searchMaximums</b> permettant de chercher la valeur maximum de chaque particule parmis les
+        valeurs maximums de chaque stations (le tout conservé dans <b><i>tabMaxs</i></b>).
+    </li>
+</ul>
+
+Pour finir, la fonction <b>colorGuesser</b>, prenant en paramètre la valeur de moyenne mensuelle d'une particule,
+ainsi que sa valeur minimum et maximum.<br>Comme son nom l'indique, cette méthode permet de choisir la couleur en
+adaptée en fonction des valeurs d'entrées (<i>2.1.3.</i>).
+
+<h3>3.2. Figures</h3>
+
+Dès lors, le programme permet de visualiser sur la carte les points où la présence en une certaine particule sont
+les plus forts ou les plus bas pour un mois donné.<br>On remarque également aisément si les données pour une station
+sont inexistantes pour cette particule et ce mois (carré gris).<br>La valeur numérique est également affichée
+en-dessous pour des indications plus précises pour l'utilisateur.
+
+<div align="center" style="margin-top: 24px;"><img src="res/img/figure-resultat.png" width="35%"></div>
+<div align="center" style="font-style: italic;margin-bottom: 24px;">Résultat affichage</div>
+
+L'utilisateur peut facilement personnaliser sa recherche parmi les données à disposition. À l'aide de la liste à
+choix, il peut sélectionner la particule qu'il souhaite observer.<br>
+Puis, à l'aide du slider, il peut aisément choisir le mois de son choix entre le mois de Janvier 2000 et le mois de
+Mai 2020. Un affichage lui indique également le mois en cours d'observation.
+
+<div align="center" style="margin-top: 24px;"><img src="res/img/figure-user-inputs.png" width="35%"></div>
+<div align="center" style="font-style: italic;margin-bottom: 24px;">Inputs pour l'utilisateur</div>
+
+L'API qui s'occupe de l'affichage de la carte, ainsi que des carrés de couleur, ne gère pas parfaitement la
+proximité
+de deux stations.<br>Ainsi, si elles ne s'affichent pas toutes, il suffit de zoomer à l'aide la molette de la souris
+jusqu'à ce qu'elles apparaissent.
+
+<div align="center" style="margin-top: 24px;"><img src="res/img/figure-resultat-zoom.png" width="30%"></div>
+<div align="center" style="font-style: italic;">Résultat affichage avec zoom</div>
+
+
+
+<h2>4. Conclusion</h2>
+
+Pour conclure, ce mini-projet rempli chacun des critères qui lui était demandé. Il permet efficacement et aisément
+de consulter les valeurs mensuels par particule et par station.<br>L'affichage des résultat sur une carte de la
+Suisse offre une visualisation rapide et précise de la présence des particules en Suisse.
+<br><br>
+L'application met un petit peu de temps à se lancer au début (environ 8 secondes), ce qui est dû à la lecture des
+données, ainsi qu'à leur traitement (càd la partie Algorithme<br>Numérique) qui est effectuée à chaque redémarrage
+de la page. Néanmoins, cela n'est pas si dérangeant puisque lorsque la page a fini de chargée, il n'y a plus aucun
+traitement<br>des données à effectuer : Les données sont traitées une fois, puis l'application ne fait plus QUE les
+utiliser.
+
+<h2>5. Références et outils</h2>
+
+<h3>5.1. Références</h3>
+
+<div class="references">
+    <ol>
+        <li>
+            Jos Lelieveld, Klaus Klingmüller, Andrea Pozzer, Ulrich Pöschl, Mohammed Fnais, Andreas Daiber, Thomas
+            Münzel, &#171; Cardiovascular disease burden from ambient air pollution in Europe reassessed using novel
+            hazard ratio functions &#187;, European Heart Journal, Volume 40, Issue 20, 21 May 2019
+        </li>
+        <li>
+            Dr. Richard Ballaman, Dr. Rudolf Weber, Dr. Lukas Emmenegger, Dr. Christoph Hüglin, Dr. Stefan Reimann,
+            &#171; NABEL Concept de mesures 2020 - 2030 &#187;, Office fédéral de l'environnement (OFEV) et European
+            Monitoring and Evaluation Program (EMEP), 6 Février 2020
+        </li>
+        <li>
+            Le réseau national d’observation des polluants atmosphériques (NABEL), &#171; NABEL-stations de mesures
+            &#187;, Office fédéral de l'environnement (OFEV) et European Monitoring and Evaluation Program (EMEP),
+            30 Mai 2018
+        </li>
+        <li>
+            Dr. Richard Ballaman, Dr. Rudolf Weber, Dr. Lukas Emmenegger, Dr. Christoph Hüglin, Dr. Stefan Reimann,
+            &#171; NABEL-Programme de mesures &#187;, Office fédéral de l'environnement (OFEV) et European
+            Monitoring and Evaluation Program (EMEP), Janvier 2020
+        </li>
+        <li>
+            Le réseau national d’observation des polluants atmosphériques (NABEL), &#171; Requête de données NABEL
+            &#187;, <a
+                href="https://www.bafu.admin.ch/bafu/fr/home/themes/air/etat/donnees/requete-de-donnees-nabel.html">https://www.bafu.admin.ch/bafu/fr/home/themes/air/etat/donnees/requete-de-donnees-nabel.html</a>,
+            Office fédéral de l'environnement (OFEV), 3 Juin 2020 (dernière visite)
+        </li>
+    </ol>
+</div>
+
+<h3>5.2. Outils</h3>
+
+<div class="tools">
+    <ul id="tools">
+        <li>
+            <a href="https://www.coordonnees-gps.fr/">https://www.coordonnees-gps.fr/</a> : Pour la récupérations
+            des coordonnées (longitudes et latitudes) de chacune des stations pour pouvoir les dessiner sur la
+            carte.
+        </li>
+        <li>
+            <a href="https://docs.mapbox.com/api/">https://docs.mapbox.com/api/</a> : Pour l'affiche de la carte de
+            la Suisse ainsi que les dessins sur la dîte carte.
+        </li>
+        <li>
+            Adobe Photoshop CC 2019 : Pour la réalisation de la figure du code couleur.
+        </li>
+    </ul>
+</div>
