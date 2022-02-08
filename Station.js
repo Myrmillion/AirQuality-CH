@@ -10,7 +10,7 @@ class Station {
 
     constructor(name) {
         this.name = name;
-        this.dateheure = [];
+        this.months = [];
         this.O3 = [];
     }
 

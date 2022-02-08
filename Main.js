@@ -13,19 +13,27 @@ forAllInfos()
 
 function forAllInfos() {
 
-    for (let station of stations) {
+    // All of this working for the same individual info (O3, NO2, ...)
+    for (let infoName of INFOS_NAMES) {
 
-        
+        let fileRows = loadFileRows(`${PATH_TO_DB}/${infoName}.csv`)
+        let headers = fileRows[0].split(";")
 
-        for (let infoName of INFOS_NAMES) {
+        console.log(headers)
 
-            let fileRows = loadFileRows(`${PATH_TO_DB}/${infoName}.csv`)
-            let headers = fileRows[0].split(";")
+        let monthNumber = 0
+        let previousDate = null
+        for (let row of fileRows) {
 
-            console.log(headers)
+            if (previousDate === null || checkSameMonth(previousDate, row[0])) {
 
-            for (let row of fileRows) {
-                index = fileRows.indexOf(row);
+                let i = 0
+                while (i < headers.length) {
+
+                }
+            }
+            else {
+
             }
         }
     }
