@@ -6,9 +6,9 @@
 
 let PATH_TO_DB = 'res/db/'
 
-let STATIONS_NAMES = ['Bern-Bollwerk', 'Lausanne-César-Roux', 'Lugano-Università', 'Zürich-Kaserne',
-    'Basel-Binningen', 'Dübendorf-Empa', 'Härkingen-A1', 'Sion-Aéroport-A9', 'Magadino-Cadenazzo',
-    'Payerne', 'Tänikon', 'Beromünster', 'Chaumont', 'Rigi-Seebodenalp', 'Davos-Seehornwald', 'Jungfraujoch']
+let STATIONS_NAMES = ['Bern-Bollwerk', 'Lausanne-Cesar-Roux', 'Lugano-Universita', 'Zurich-Kaserne',
+    'Basel-Binningen', 'Dubendorf-Empa', 'Harkingen-A1', 'Sion-Aeroport-A9', 'Magadino-Cadenazzo',
+    'Payerne', 'Tanikon', 'Beromunster', 'Chaumont', 'Rigi-Seebodenalp', 'Davos-Seehornwald', 'Jungfraujoch']
 
 let INFOS_NAMES = ['O3']
 
