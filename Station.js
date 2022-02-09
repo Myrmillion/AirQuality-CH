@@ -12,6 +12,18 @@ class Station {
         this.name = name;
         this.months = [];
         this.O3 = [];
+        this.NO2 = [];
+        this.SO2 = [];
+        this.CO = [];
+        this.NMVOC = [];
+        this.EC = [];
+        this.CPC = [];
+        this.TEMP = [];
+        this.RAD = [];
+        this.PREC = [];
+        this.PM10 = [];
+        this.PM25 = [];
+        this.NOX = [];
     }
 
     static getStations() {

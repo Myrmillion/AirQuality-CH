@@ -9,9 +9,9 @@ let stations = Station.getStations()
 
 forAllInfos()
 
-
-
 function forAllInfos() {
+
+    let firstInfo = true
 
     // All of this working for the same individual info (O3, NO2, ...)
     for (let infoName of INFOS_NAMES) {
@@ -22,43 +22,85 @@ function forAllInfos() {
         let monthNumber = 0;
         let currentMonth = null;
         let nbDaysinMonth = 0;
-        
-        // To avoid header and last empty rows
-        for (let row of fileRows.slice(1, -1)) {
 
-            let rowTab = row.split(";")
+        if (!firstInfo) {
+            // To avoid header and last empty rows
+            for (let row of fileRows.slice(1, -1)) {
 
-            // When we change month
-            if (currentMonth !== null && !checkSameMonth(rowTab[0], currentMonth)) {
+                let rowTab = row.split(";");
 
-                for (let i = 1; i < fileStations.length; i++) {
-                    stations[fileStations[i]][infoName][monthNumber] /= nbDaysinMonth;
+                // When we change month
+                if (currentMonth !== null && !checkSameMonth(rowTab[0], currentMonth)) {
+
+                    for (let i = 1; i < fileStations.length; i++) {
+                        stations[fileStations[i]][infoName][monthNumber] /= nbDaysinMonth;
+                    }
+
+                    monthNumber++;
+                    nbDaysinMonth = 0;
+                    currentMonth = rowTab[0];
+
+                    for (let i = 1; i < fileStations.length; i++) {
+                        stations[fileStations[i]][infoName][monthNumber] = 0.;
+                    }
+                }
+                else if (currentMonth === null) {
+
+                    currentMonth = rowTab[0];
+
+                    for (let i = 1; i < fileStations.length; i++) {
+                        stations[fileStations[i]][infoName][monthNumber] = 0.;
+                    }
                 }
 
-                monthNumber++;
-                nbDaysinMonth = 0;
-                currentMonth = rowTab[0];
-
                 for (let i = 1; i < fileStations.length; i++) {
-                    stations[fileStations[i]][infoName][monthNumber] = 0.;
-                    stations[fileStations[i]]["months"][monthNumber] = currentMonth;
+                    stations[fileStations[i]][infoName][monthNumber] += parseFloat(rowTab[i]);
                 }
-            }
-            else if (currentMonth === null) {
 
-                currentMonth = rowTab[0];
-
-                for (let i = 1; i < fileStations.length; i++) {
-                    stations[fileStations[i]][infoName][monthNumber] = 0.;
-                    stations[fileStations[i]]["months"][monthNumber] = currentMonth;
-                }
-            }
-
-            for (let i = 1; i < fileStations.length; i++) {
-                stations[fileStations[i]][infoName][monthNumber] += parseFloat(rowTab[i]);
                 nbDaysinMonth++;
             }
         }
+        else {
+            // To avoid header and last empty rows
+            for (let row of fileRows.slice(1, -1)) {
+
+                let rowTab = row.split(";");
+
+                // When we change month
+                if (currentMonth !== null && !checkSameMonth(rowTab[0], currentMonth)) {
+
+                    for (let i = 1; i < fileStations.length; i++) {
+                        stations[fileStations[i]][infoName][monthNumber] /= nbDaysinMonth;
+                    }
+
+                    monthNumber++;
+                    nbDaysinMonth = 0;
+                    currentMonth = rowTab[0];
+
+                    for (let i = 1; i < fileStations.length; i++) {
+                        stations[fileStations[i]][infoName][monthNumber] = 0.;
+                        stations[fileStations[i]]["months"][monthNumber] = currentMonth;
+                    }
+                }
+                else if (currentMonth === null) {
+
+                    currentMonth = rowTab[0];
+
+                    for (let i = 1; i < fileStations.length; i++) {
+                        stations[fileStations[i]][infoName][monthNumber] = 0.;
+                        stations[fileStations[i]]["months"][monthNumber] = currentMonth;
+                    }
+                }
+
+                for (let i = 1; i < fileStations.length; i++) {
+                    stations[fileStations[i]][infoName][monthNumber] += parseFloat(rowTab[i]);
+                }
+
+                nbDaysinMonth++;
+            }
+        }
+
+        firstInfo = false;
     }
 
     console.log(stations);

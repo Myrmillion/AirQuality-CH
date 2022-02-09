@@ -10,5 +10,5 @@ let STATIONS_NAMES = ['Bern-Bollwerk', 'Lausanne-Cesar-Roux', 'Lugano-Universita
     'Basel-Binningen', 'Dubendorf-Empa', 'Harkingen-A1', 'Sion-Aeroport-A9', 'Magadino-Cadenazzo',
     'Payerne', 'Tanikon', 'Beromunster', 'Chaumont', 'Rigi-Seebodenalp', 'Davos-Seehornwald', 'Jungfraujoch']
 
-let INFOS_NAMES = ['O3']
+let INFOS_NAMES = ['O3', 'NO2', 'SO2', 'CO', 'NMVOC', 'EC', 'CPC', 'TEMP', 'RAD', 'PREC', 'PM10', 'PM25', 'NOX']
 
