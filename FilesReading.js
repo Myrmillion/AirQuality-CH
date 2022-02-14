@@ -68,9 +68,9 @@ function forAllInfos() {
     let firstInfo = true
 
     // All of this working for the same individual info (O3, NO2, ...)
-    for (let infoName of INFOS_NAMES) {
+    for (let infoName of INFOS.NAMES) {
 
-        let fileRows = loadFileRows(`${PATH_TO_DB}/${infoName}.csv`);
+        let fileRows = loadAndPrepareFile(`${PATH_TO_DB}/${infoName}.csv`);
         let fileStations = fileRows[0].split(";");
 
         // doing this for reference-passing
@@ -130,20 +130,9 @@ function forAllInfos() {
 //                     LOAD AND PREPARE ONE FILE                    //
 //------------------------------------------------------------------//
 
-function loadFileRows(filePath) {
+function loadAndPrepareFile(filePath) {
 
-    let result = null;
-    let xmlhttp = new XMLHttpRequest();
-
-    xmlhttp.open("GET", filePath, false);
-    xmlhttp.overrideMimeType('text/csv; charset=iso-8859-1'); // or 'text/xml; charset=iso-8859-1' or 'text/plain; charset=iso-8859-1'
-    xmlhttp.send();
-
-    if (xmlhttp.status == 200) {
-        result = xmlhttp.responseText;
-    }
-
-    fileRows = result.split("\n");
+    fileRows = loadFileRows(filePath);
 
     for (let row of fileRows) {
 

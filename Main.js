@@ -4,5 +4,10 @@
  *   @Date 08/02/2022
  */
 
-forAllInfos()
-console.log(stations);
+function main() {
+
+    forAllInfos();
+    console.log(stations);
+}
+
+main();
