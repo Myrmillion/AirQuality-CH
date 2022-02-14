@@ -68,10 +68,13 @@ function forAllInfos() {
     let firstInfo = true
 
     // All of this working for the same individual info (O3, NO2, ...)
-    for (let infoName of INFOS.NAMES) {
+    for (let infoName of DB_FILES) {
 
         let fileRows = loadAndPrepareFile(`${PATH_TO_DB}/${infoName}.csv`);
         let fileStations = fileRows[0].split(";");
+
+        // switch to the 'actual name' of the info (not the file name)
+        infoName = INFOS.NAMES[DB_FILES.indexOf(infoName)]
 
         // doing this for reference-passing
         let monthNumber = { m: 0 };
