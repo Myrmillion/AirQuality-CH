@@ -5,7 +5,7 @@
  */
 
 //------------------------------------------------------------------//
-//                     Static / Defined only once                   //
+//                     Static / Defined only ONCE                   //
 //------------------------------------------------------------------//
 
 let PATH_TO_DB = 'res/db/'
@@ -17,31 +17,24 @@ let STATIONS_NAMES = ['Bern-Bollwerk', 'Lausanne-Cesar-Roux', 'Lugano-Universita
     'Payerne', 'Tanikon', 'Beromunster', 'Chaumont', 'Rigi-Seebodenalp', 'Davos-Seehornwald', 'Jungfraujoch']
 
 let INFOS = {
-    SHORT_NAME: FILL_INFOS_NAMES,
-    LONG_NAME:
+    SHORT_NAMES: [],
+    LONG_NAMES: [],
+    VAR_NAMES: [],
     UNITS: []
 }
 
-FILL_INFOS_UNITS();
+FILL_INFOS();
 
 //------------------------------------------------------------------//
 //                           PREPARATION                            //
 //------------------------------------------------------------------//
 
-function FILL_INFOS_NAMES() {
-
-    let array = []
+function FILL_INFOS() {
 
     for (let infoName of DB_FILES) {
-        array.push(infoName.replace(/\./g,''));
-    }
 
-
-}
-
-function FILL_INFOS_UNITS() {
-
-    for (let infoName of INFOS.NAMES) {
+        // Filling VAR_NAMES depending on DB_FILES variable
+        INFOS.VAR_NAMES.push(infoName.replace(/\./g, ''));
 
         fileRows = loadFileRows(`${PATH_TO_DB}/${infoName}.csv`);
 
@@ -49,8 +42,25 @@ function FILL_INFOS_UNITS() {
 
             let rowTab = row.split(" ");
 
-            if (removeDiacritics(rowTab[0]) === "Unite:") {
+            if (removeDiacritics(rowTab[0]) === "Polluant:") {
 
+                // Filling SHORT_NAMES based on the 'parenthesis names' in Files
+                let string = row.substring(row.lastIndexOf('(') + 1, row.lastIndexOf(')'));
+                INFOS.SHORT_NAMES.push(string);
+
+                // Filling LONG_NAMES based on the 'non-parenthesis names' in Files
+                string = '';
+                for (let i = 1; i < rowTab.length; i++) {
+                    if (rowTab[i][0] === '(') {
+                        break;
+                    }
+                    string += rowTab[i] + ' ';
+                }
+                INFOS.LONG_NAMES.push(string.slice(0, -1));
+            }
+
+            // Filling UNITS based on the units in Files
+            if (removeDiacritics(rowTab[0]) === "Unite:") {
                 INFOS.UNITS.push(rowTab[1]);
                 break;
             }
