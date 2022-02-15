@@ -38,7 +38,7 @@ class Station {
     //------------------------------------------------------------------//
 
     static #prepareStations() {
-        for (let stationName of STATIONS_NAMES) {
+        for (let stationName of STATIONS.NAMES) {
             this.#stations[stationName] = new Station(stationName);
         }
     }

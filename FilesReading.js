@@ -85,7 +85,7 @@ function forAllInfos() {
 
         // initialization of nbDaysInMonth
         let nbDaysinMonth = [];
-        for (let station of STATIONS_NAMES) {
+        for (let station of STATIONS.NAMES) {
             nbDaysinMonth[station] = 0;
         }
 
