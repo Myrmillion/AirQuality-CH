@@ -5,7 +5,23 @@
 /**
  * date format : dd.mm.yyyy
  */
-function checkSameMonth(firstDate, secondDate) {
+ function checkSameMonth(firstDate, secondDate) {
+
+    let firstSplit = firstDate.split(".");
+    let secondSplit = secondDate.split(".");
+
+    // month only must be the same
+    if ((firstSplit[1] !== secondSplit[1])) {
+        return false;
+    }
+
+    return true;
+}
+
+/**
+ * date format : dd.mm.yyyy
+ */
+function checkSameMonthAndYear(firstDate, secondDate) {
 
     let firstSplit = firstDate.split(".");
     let secondSplit = secondDate.split(".");
@@ -16,6 +32,21 @@ function checkSameMonth(firstDate, secondDate) {
     }
 
     return true;
+}
+
+function groupSameMonths(dates) {
+
+    let obj = {};
+
+    for (let i = 1 ; i <= 12; i++) {
+        obj[parseInt(i, 10)] = [];
+    }
+
+    for (let date of dates) {        
+        obj[parseInt(date.split(".")[1], 10)].push(date);
+    }
+
+    return obj;
 }
 
 function loadFileRows(filePath) {

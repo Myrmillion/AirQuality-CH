@@ -24,6 +24,8 @@ class Station {
         this.PM10 = [];
         this.PM25 = [];
         this.NOX = [];
+        this.mins = [];
+        this.maxs = [];
     }
 
     static getStations() {

@@ -4,10 +4,30 @@
  *   @Date 08/02/2022
  */
 
+//------------------------------------------------------------------//
+//                           From HTML                              //
+//------------------------------------------------------------------//
+
+
+
+//------------------------------------------------------------------//
+//                               Main                               //
+//------------------------------------------------------------------//
+
 function main() {
 
-    forAllInfos();
+    // Ask the retrieval and the storing of Elements from files in a month fashion
+    retrieveAndStoreElements();
+
+    // Ask the retrieval of the minimal and maximal values per info and sation in a month fashion
+    retrieveMinMaxPerInfoMonthStation();
+
+    // Print the resulting stations with their per month Elements
     console.log(stations);
+
+    // Print the resulting stations with their per month Elements
+    console.log(INFOS);
 }
 
-main();
+
+main(); // ---> the start of the program !

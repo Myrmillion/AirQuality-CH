@@ -12,7 +12,7 @@
 let stations = Station.getStations()
 
 //------------------------------------------------------------------//
-//                        SMALL UTILITIES                           //
+//                      LOCAL SMALL UTILITIES                       //
 //------------------------------------------------------------------//
 
 function normalizePerMonthByNbOfDays(fileStations, infoName, monthNumber, nbDaysinMonth) {
@@ -65,7 +65,7 @@ function updateInfo(fileStations, infoName, monthNumber, rowTab, nbDaysinMonth) 
 //     RETRIEVE FILES ELEMENTS (infos + months) AND STORE THEM      //
 //------------------------------------------------------------------//
 
-function forAllInfos() {
+function retrieveAndStoreElements() {
 
     let firstInfo = true
 
@@ -97,7 +97,7 @@ function forAllInfos() {
                 let rowTab = row.split(";");
 
                 // When we change month
-                if (currentMonth.m !== null && !checkSameMonth(rowTab[0], currentMonth.m)) {
+                if (currentMonth.m !== null && !checkSameMonthAndYear(rowTab[0], currentMonth.m)) {
                     normalizePerMonthByNbOfDays(fileStations, infoName, monthNumber, nbDaysinMonth);
                     initializeOtherInfo(currentMonth, rowTab[0], fileStations, infoName, monthNumber.m);
                 }
@@ -116,7 +116,7 @@ function forAllInfos() {
                 let rowTab = row.split(";");
 
                 // When we change month
-                if (currentMonth.m !== null && !checkSameMonth(rowTab[0], currentMonth.m)) {
+                if (currentMonth.m !== null && !checkSameMonthAndYear(rowTab[0], currentMonth.m)) {
                     normalizePerMonthByNbOfDays(fileStations, infoName, monthNumber, nbDaysinMonth);
                     initializeFirstInfo(currentMonth, rowTab[0], fileStations, infoName, monthNumber.m);
                 }
@@ -128,7 +128,35 @@ function forAllInfos() {
             }
         }
 
+        normalizePerMonthByNbOfDays(fileStations, infoName, monthNumber, nbDaysinMonth);
+
         firstInfo = false
+    }
+}
+
+function retrieveMinMaxPerInfoMonthStation() {
+
+    let yo = stations["Bern-Bollwerk"]["months"];
+
+    let groupedMonths = groupSameMonths(yo);
+
+    for (let month in groupedMonths) {
+
+        let xd = [];
+
+        for (let stationName of STATIONS.NAMES) {
+            for (let infoName of INFOS.VAR_NAMES) {
+
+                let station = stations[stationName];
+
+                for (let date in groupedMonths[month]) {
+                    xd.push(station[infoName][yo.indexOf(date)]);
+                }
+
+                station.mins.push(Math.min(...xd.filter(isFinite))); // smart way to get the min in an array which contains undefined/uncovertible values
+                station.maxs.push(Math.max(...xd.filter(isFinite))); // smart way to get the max in an array which contains undefined/uncovertible values
+            }
+        }
     }
 }
 
