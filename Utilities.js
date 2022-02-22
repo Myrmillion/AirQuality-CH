@@ -39,7 +39,7 @@ function groupSameMonths(dates) {
     let obj = {};
 
     for (let i = 1 ; i <= 12; i++) {
-        obj[parseInt(i, 10)] = [];
+        obj[i] = [];
     }
 
     for (let date of dates) {        

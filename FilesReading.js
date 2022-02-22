@@ -137,27 +137,41 @@ function retrieveAndStoreElements() {
 function retrieveMinMaxPerInfoMonthStation() {
 
     let yo = stations["Bern-Bollwerk"]["months"];
-
     let groupedMonths = groupSameMonths(yo);
 
-    for (let month in groupedMonths) {
+    console.log("les grouped months", groupedMonths);
 
-        let xd = [];
+    for (let stationName of STATIONS.NAMES) {
 
-        for (let stationName of STATIONS.NAMES) {
-            for (let infoName of INFOS.VAR_NAMES) {
+        let obj = {};
+        for (let infoName of INFOS.VAR_NAMES) {
+            obj[infoName] = {};
+            for (let i = 1 ; i <= 12; i++) {
+                obj[infoName][i] = [];
+            }
+        }
 
-                let station = stations[stationName];
+        console.log("obj", obj);
 
-                for (let date in groupedMonths[month]) {
-                    xd.push(station[infoName][yo.indexOf(date)]);
-                }
+        for (let infoName of INFOS.VAR_NAMES) {
+            for (let month in groupedMonths) {
+                for (let date of groupedMonths[month]) {
+                    obj[infoName][month].push(stations[stationName][infoName][yo.indexOf(date)]);
+                }                
+            }
+        }
 
-                station.mins.push(Math.min(...xd.filter(isFinite))); // smart way to get the min in an array which contains undefined/uncovertible values
-                station.maxs.push(Math.max(...xd.filter(isFinite))); // smart way to get the max in an array which contains undefined/uncovertible values
+        for (let infoName in obj) {
+            for (let month in obj[infoName]) {
+                stations[stationName].mins[infoName] = Math.min(...obj[infoName][month].filter(isFinite));
+                stations[stationName].maxs[infoName] = Math.max(...obj[infoName][month].filter(isFinite));
             }
         }
     }
+
+
+    // station.mins.push(Math.min(...xd.filter(isFinite))); // smart way to get the min in an array which contains undefined/uncovertible values
+    // station.maxs.push(Math.max(...xd.filter(isFinite))); // smart way to get the max in an array which contains undefined/uncovertible values
 }
 
 //------------------------------------------------------------------//
