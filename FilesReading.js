@@ -158,7 +158,7 @@ function retrieveMinMaxPerInfoMonthStation() {
                     min = (value < min) ? value : min;
                     max = (value > max) ? value : max;
                 }
-                
+
                 station.mins[infoName][month] = min;
                 station.maxs[infoName][month] = max;
 
