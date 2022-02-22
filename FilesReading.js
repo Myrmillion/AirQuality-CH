@@ -142,28 +142,28 @@ function retrieveMinMaxPerInfoMonthStation() {
         let months = station["months"];
         let groupedMonths = groupSameMonths(months);
 
-        let obj = {};
         for (let infoName of INFOS.VAR_NAMES) {
-            obj[infoName] = {};
-            for (let i = 1; i <= 12; i++) {
-                obj[infoName][i] = [];
-            }
-        }
 
-        for (let infoName of INFOS.VAR_NAMES) {
-            for (let month in groupedMonths) {
-                for (let date of groupedMonths[month]) {
-                    obj[infoName][month].push(station[infoName][months.indexOf(date)]);
-                }
-            }
+            let min = Infinity;
+            let max = -Infinity;
+
             station.mins[infoName] = {};
             station.maxs[infoName] = {};
-        }
 
-        for (let infoName in obj) {
-            for (let month in obj[infoName]) {
-                station.mins[infoName][month] = Math.min(...obj[infoName][month].filter(isFinite)); // smart way to get the min in an array which contains undefined/uncovertible values
-                station.maxs[infoName][month] = Math.max(...obj[infoName][month].filter(isFinite)); // smart way to get the max in an array which contains undefined/uncovertible values
+            for (let month in groupedMonths) {
+                for (let date of groupedMonths[month]) {
+
+                    let value = station[infoName][months.indexOf(date)];
+
+                    min = (value < min) ? value : min;
+                    max = (value > max) ? value : max;
+                }
+                
+                station.mins[infoName][month] = min;
+                station.maxs[infoName][month] = max;
+
+                min = Infinity;
+                max = -Infinity;
             }
         }
     }
